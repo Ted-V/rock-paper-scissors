@@ -1,0 +1,1 @@
+Rock-Paper-Scissors in the web browser. The goal of this project is to practice JS fundamentals and DOM manipulation. 

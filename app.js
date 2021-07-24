@@ -20,25 +20,44 @@ function getPlayerChoice() {
     playerChoice = prompt("Choose: Rock, Paper, or Scissors: ").toString().toLowerCase();
 }
 
-function game() {
-    getComputerChoice();
-    getPlayerChoice();
-}
 
 function playRound(computerChoice, playerChoice) {
     if (computerChoice == 'rock' && playerChoice == 'scissors') {
-        console.log('Computer wins!')
+        computerPoints++;
+        return 'Computer wins!';
     } else if (computerChoice == 'paper' && playerChoice == 'rock') {
-        console.log('Computer wins!')
+        computerPoints++;
+        return 'Computer wins!';
     } else if (computerChoice == 'scissors' && playerChoice == 'paper') {
-        console.log('Computer wins!')
+        computerPoints++;
+        return 'Computer wins!';
     } else if (playerChoice == 'rock' && computerChoice == 'scissors') {
-        console.log('Player wins!')
+        playerPoints++;
+        return 'Player wins!';
     } else if (playerChoice == 'paper' && computerChoice == 'rock') {
-        console.log('Player wins!')
+        playerPoints++;
+        return 'Player wins!';
     } else if (playerChoice == 'scissors' && computerChoice == 'paper') {
-        console.log('Player wins!')
+        playerPoints++;
+        return 'Player wins!';
     } else {
-        console.log('Draw!')
+        return 'Draw!';
+    }
+}
+
+// Track points
+let playerPoints = 0;
+let computerPoints = 0;
+
+function game() {
+    while (playerPoints < 5 || computerPoints < 5) {
+        getComputerChoice();
+        getPlayerChoice();
+        console.log(playRound(computerChoice, playerChoice));
+    }
+    if (playerPoints == 5) {
+        console.log("Player wins the game!")
+    } else if (computerPoints == 5) {
+        console.log("Computer wins the game!")
     }
 }

@@ -54,10 +54,13 @@ function game() {
         getComputerChoice();
         getPlayerChoice();
         console.log(playRound(computerChoice, playerChoice));
-    }
-    if (playerPoints == 5) {
-        console.log("Player wins the game!")
-    } else if (computerPoints == 5) {
-        console.log("Computer wins the game!")
+
+        if (playerPoints == 5) {
+            console.log(`Player wins the game! ${playerPoints} to ${computerPoints}`);
+            break;
+        } else if (computerPoints == 5) {
+            console.log(`The computer wins the game! ${computerPoints} to ${playerPoints}`);
+            break;
+        }
     }
 }

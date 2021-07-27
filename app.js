@@ -1,47 +1,17 @@
-// Get Computer choice
-let computerChoice = '';
+// Store RPS selection
+let computerSelection = '';
+let playerSelection = '';
 
-function getComputerChoice() {
+// Generate CPU's selection
+function getComputerSelection() {
     let num = Math.floor(Math.random() * 3) + 1;
 
     if (num == 1) {
-        computerChoice = 'rock';
+        computerSelection = 'Rock!';
     } else if (num == 2) {
-        computerChoice = 'paper';
+        computerSelection = 'Paper!';
     } else {
-        computerChoice = 'scissors';
-    }
-}
-
-// Get player choice
-let playerChoice = '';
-
-function getPlayerChoice() {
-    playerChoice = prompt("Choose: Rock, Paper, or Scissors: ").toString().toLowerCase();
-}
-
-
-function playRound(computerChoice, playerChoice) {
-    if (computerChoice == 'rock' && playerChoice == 'scissors') {
-        computerPoints++;
-        return 'Computer wins!';
-    } else if (computerChoice == 'paper' && playerChoice == 'rock') {
-        computerPoints++;
-        return 'Computer wins!';
-    } else if (computerChoice == 'scissors' && playerChoice == 'paper') {
-        computerPoints++;
-        return 'Computer wins!';
-    } else if (playerChoice == 'rock' && computerChoice == 'scissors') {
-        playerPoints++;
-        return 'Player wins!';
-    } else if (playerChoice == 'paper' && computerChoice == 'rock') {
-        playerPoints++;
-        return 'Player wins!';
-    } else if (playerChoice == 'scissors' && computerChoice == 'paper') {
-        playerPoints++;
-        return 'Player wins!';
-    } else {
-        return 'Draw!';
+        computerSelection = 'Scissors!';
     }
 }
 
@@ -49,18 +19,82 @@ function playRound(computerChoice, playerChoice) {
 let playerPoints = 0;
 let computerPoints = 0;
 
-function game() {
-    while (playerPoints < 5 || computerPoints < 5) {
-        getComputerChoice();
-        getPlayerChoice();
-        console.log(playRound(computerChoice, playerChoice));
+// Display elements
+let scoreDisplay = document.getElementById('score-display');
+let playerSelectionDisplay = document.getElementById('player-selection');
+let computerSelectionDisplay = document.getElementById('computer-selection');
 
-        if (playerPoints == 5) {
-            console.log(`Player wins the game! ${playerPoints} to ${computerPoints}`);
-            break;
-        } else if (computerPoints == 5) {
-            console.log(`The computer wins the game! ${computerPoints} to ${playerPoints}`);
-            break;
-        }
+// Selection buttons
+let rock = document.getElementById('rock');
+let paper = document.getElementById('paper');
+let scissors = document.getElementById('scissors');
+
+// Click any button to start a first-to-5 game
+rock.addEventListener('click', function () {
+    playerSelectionDisplay.textContent = 'Rock!';
+    playerSelection = 'Rock!';
+    game();
+});
+
+paper.addEventListener('click', function () {
+    playerSelectionDisplay.textContent = 'Paper!';
+    playerSelection = 'Paper!';
+    game();
+});
+
+scissors.addEventListener('click', function () {
+    playerSelectionDisplay.textContent = 'Scissors!';
+    playerSelection = 'Scissors!';
+    game();
+});
+
+// Core game logic
+function game() {
+    getComputerSelection();
+    computerSelectionDisplay.textContent = computerSelection;
+    playRound(computerSelection, playerSelection)
+    checkForWin();
+}
+
+// Determine who to give a point
+function playRound(computerSelection, playerSelection) {
+    if (computerSelection == 'Rock!' && playerSelection == 'Scissors!') {
+        computerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else if (computerSelection == 'Paper!' && playerSelection == 'Rock!') {
+        computerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else if (computerSelection == 'Scissors!' && playerSelection == 'Paper!') {
+        computerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else if (playerSelection == 'Rock!' && computerSelection == 'Scissors!') {
+        playerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else if (playerSelection == 'Paper!' && computerSelection == 'Rock!') {
+        playerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else if (playerSelection == 'Scissors!' && computerSelection == 'Paper!') {
+        playerPoints++;
+        scoreDisplay.textContent = `${playerPoints} - ${computerPoints}`;
+    } else {
+        scoreDisplay.textContent = `Draw! ${playerPoints} - ${computerPoints}`;
     }
+}
+
+// Check if win condition (5 points) is met
+function checkForWin() {
+    if (playerPoints == 5) {
+        scoreDisplay.textContent = `You win! ${playerPoints} - ${computerPoints}.`;
+        reset();
+    } else if (computerPoints == 5) {
+        scoreDisplay.textContent = `The computer wins the game! ${computerPoints} - ${playerPoints}.`;
+        reset();
+    }
+
+}
+
+// Reset the points for a new game to be played
+function reset() {
+    playerPoints = 0;
+    computerPoints = 0;
 }
